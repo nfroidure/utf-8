@@ -42,10 +42,8 @@
 			// Reading the first byte
 			mask='0000'.slice(0,charLength+1)+'11111111'.slice(charLength+1);
 			charCode+=(bytes[byteOffset]&parseInt(mask,2))<<((--charLength)*6);
-			console.log(charCode.toString(2),mask);
 			// Reading the next bytes
 			while(charLength) {
-				console.log((bytes[1+byteOffset]&0x3F)<<((charLength-1)*6).toString(2));
 				charCode+=((bytes[++byteOffset]&0x3F)<<((--charLength)*6));
 			}
 			return charCode;
@@ -64,7 +62,6 @@
 							+' bytes are available.');
 					}
 				} else {
-					console.log(byteOffset,UTF8.getCharCode(bytes, byteOffset, charLength, strict));
 					chars.push(String.fromCharCode(
 						UTF8.getCharCode(bytes, byteOffset, charLength, strict)
 					));
