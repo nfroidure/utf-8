@@ -6,70 +6,70 @@
 // START: Module logic start
 
 	var UTF8={
-		'getStringFromBuffer': function(buffer, offset, byteLength, strict) {
-			var bytes=new Uint8Array(buffer), chars=[];
-			if(!(buffer instanceof ArrayBuffer)) {
-				throw Error('Invalid buffer given.');
+		// UTF8 decoding functions
+		'getCharLength': function(theByte) {
+			// 4 bytes encoded char
+			if(0xF0==(theByte&0xF0)) {
+				return 4;
+			// 3 bytes encoded char
+			} else if(0xE0==(theByte&0xE0)) {
+				return 3;
+			// 2 bytes encoded char
+			} else if(0xC0==(theByte&0xC0)) {
+				return 2;
+			// 1 bytes encoded char
+			} else {
+				return 1;
 			}
-			for(var i=offset||0, j=byteLength||buffer.byteLength; i<j; i++) {
-				// 4 bytes encoded char
-				if(0xF0==(bytes[i]&0xF0)) {
-					if(i+3>j) {
-						if(strict) {
-							throw Error('Index:'+i+': Found a 4 bytes encoded char'
-								+' declaration but only '+(j-i)+' bytes are available.');
-						}
-						break;
+		},
+		'getCharCode': function(bytes, byteOffset, charLength) {
+			if(charLength)
+			var charCode=0, mask='';
+			byteOffset=byteOffset||0;
+			// Retrieve charLength if not given
+			charLength=charLength||UTF8.getCharLength(bytes[byteOffset]);
+			// Return byte value if charlength is 1
+			if(1===charLength) {
+				return bytes[byteOffset];
+			}
+			// Test UTF8 integrity
+			mask='00000000';
+			mask[charLength]=1
+			if(bytes[byteOffset]&(parseInt(mask,2))) {
+				throw Error('Index '+byteOffset+': A '+charLength+' bytes encoded char'
+					+' cannot encode the '+charLength+'th rank bit to 1.');
+			}
+			// Reading the first byte
+			mask='0000'.slice(0,charLength+1)+'11111111'.slice(charLength+1);
+			charCode+=(bytes[byteOffset]&parseInt(mask,2))<<((--charLength)*6);
+			console.log(charCode.toString(2),mask);
+			// Reading the next bytes
+			while(charLength) {
+				console.log((bytes[1+byteOffset]&0x3F)<<((charLength-1)*6).toString(2));
+				charCode+=((bytes[++byteOffset]&0x3F)<<((--charLength)*6));
+			}
+			return charCode;
+		},
+		'getStringFromBytes': function(bytes, byteOffset, byteLength, strict) {
+			var charLength, chars=[];
+			byteOffset=byteOffset|0;
+			byteLength=('number' === typeof byteLength?byteLength:
+				bytes.byteLength||bytes.Length);
+			for(; byteOffset<byteLength; byteOffset++) {
+				charLength=UTF8.getCharLength(bytes[byteOffset]);
+				if(byteOffset+charLength>byteLength) {
+					if(strict) {
+						throw Error('Index '+byteOffset+': Found a '+charLength+' bytes'
+							+' encoded char declaration but only '+(byteLength-byteOffset)
+							+' bytes are available.');
 					}
-					if(bytes[i]&0x8) {
-						throw Error('Index:'+i+': A 4 bytes encoded char cannot encode the'
-							+' 4th rank bit to 1.');
-					}
-					chars.push(String.fromCharCode(
-						((bytes[i]&0x0F)<<18)
-						+((bytes[++i]&0x3F)<<12)
-						+((bytes[++i]&0x3F)<<6)
-						+(bytes[++i]&0x3F)
-					));
-				// 3 bytes encoded char
-				} else if(0xE0==(bytes[i]&0xE0)) {
-					if(i+2>j) {
-						if(strict) {
-							throw Error('Index:'+i+': Found a 3 bytes encoded char'
-								+' declaration but only '+(j-i)+' bytes are available.');
-						}
-						break;
-					}
-					if(bytes[i]&0x10) {
-						throw Error('Index:'+i+': A 3 bytes encoded char cannot encode the'
-							+' 5th rank bit to 1.');
-					}
-					chars.push(String.fromCharCode(
-						((bytes[i]&0x1F)<<12)
-						+((bytes[++i]&0x3F)<<6)
-						+(bytes[++i]&0x3F)
-					));
-				// 2 bytes encoded char
-				} else if(0xC0==(bytes[i]&0xC0)) {
-					if(i+1>j) {
-						if(strict) {
-							throw Error('Index:'+i+': Found a 2 bytes encoded char'
-								+' declaration but only 1 byte is available.');
-						}
-						break;
-					}
-					if(bytes[i]&0x20) {
-						throw Error('Index:'+i+': A 2 bytes encoded char cannot encode the'
-							+' 6th rank bit to 1.');
-					}
-					chars.push(String.fromCharCode(
-						((bytes[i]&0x1F)<<6)
-						+(bytes[++i]&0x3F))
-					);
-				// 1 bytes encoded char
 				} else {
-					chars.push(String.fromCharCode(bytes[i]));
+					console.log(byteOffset,UTF8.getCharCode(bytes, byteOffset, charLength, strict));
+					chars.push(String.fromCharCode(
+						UTF8.getCharCode(bytes, byteOffset, charLength, strict)
+					));
 				}
+				byteOffset+=charLength-1;
 			}
 			return chars.join('');
 		}
