@@ -16,7 +16,8 @@ module.exports = function(config) {
     files: [
     	'tests/main.karma.js',
       {pattern: 'src/*.js', included: false},
-      {pattern: 'tests/*.mocha.js', included: false}
+      {pattern: 'tests/*.mocha.js', included: false},
+      {pattern: 'tests/files/*.txt', included: false}
     ],
 
 

@@ -134,6 +134,10 @@
 			assert.equal(bytes.length,2);
 			assert.equal(bytes[0],0xC3);
 			assert.equal(bytes[1],0xA9);
+			var bytes=UTF8.setBytesFromCharCode('ä'.charCodeAt(0));
+			assert.equal(bytes.length,2);
+			assert.equal(bytes[0],0xC3);
+			assert.equal(bytes[1],0xA4);
 		});
 
 		it('for 3 bytes encoded chars', function() {
@@ -151,6 +155,34 @@
 		it('for this simple sentence', function() {
 			assert.equal(UTF8.getStringFromBytes(UTF8.setBytesFromString(
 				'J\'avais gagné 15€ au tiercé !')),'J\'avais gagné 15€ au tiercé !');
+		});
+
+		function compareFile(file, done) {
+			var oReq = new XMLHttpRequest();
+			oReq.open("GET", "/base/tests/files/"+file, true);
+			oReq.responseType = "arraybuffer";
+			oReq.onload = function (oEvent) {
+				var tReq = new XMLHttpRequest();
+				tReq.open("GET", "/base/tests/files/"+file, true);
+				tReq.onload = function (tEvent) {
+					var a=new Uint8Array(oReq.response);
+					assert.equal(
+						UTF8.getStringFromBytes(a),
+						tReq.responseText
+					);
+					done();
+				};
+				tReq.send(null);
+			};
+			oReq.send(null);
+		}
+
+		it('for Debian russian man pages', function(done) {
+			compareFile('man-chown-ru.txt', done);
+		});
+
+		it('for Debian japanese man pages', function(done) {
+			compareFile('man-whatis-ja.txt', done);
 		});
 
 	});

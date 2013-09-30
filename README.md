@@ -67,3 +67,7 @@ Also available on NPM :
 ```sh
 npm install utf-8
 ```
+
+# Thanks
+- The Debian project for it's free (as freedom) russian/japanese man pages
+ used for real world files tests !

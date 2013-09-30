@@ -15,7 +15,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'src/*.js',
-      'tests/*.mocha.js'
+      'tests/*.mocha.js',
+      {pattern: 'tests/files/*.txt', included: false}
     ],
 
 
