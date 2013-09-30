@@ -6,6 +6,15 @@
 // START: Module logic start
 
 	var UTF8={
+		// UTF8 encoding detection
+		'isUTF8': function(string) {
+			try {
+				UTF8.setBytesFromString(string);
+			} catch(e) {
+				return false;
+			}
+			return true;
+		},
 		// UTF8 decoding functions
 		'getCharLength': function(theByte) {
 			// 4 bytes encoded char (mask 11110000)
