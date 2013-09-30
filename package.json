@@ -1,0 +1,30 @@
+{
+	"name": "utf-8",
+	"description": "Encode/decode UTF8.",
+	"version": "0.1.0",
+	"author": "Nicolas Froidure",
+	"repository": {
+	"type": "git",
+	"url": "http://github.com/nfroidure/UTF8.git"
+	},
+	"engines": {
+		"node": "*"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"karma": "~0.10.1",
+		"karma-mocha": "*",
+		"karma-firefox-launcher": "~0.1",
+		"karma-slimerjs-launcher": "0.1.2",
+		"karma-requirejs": "*"
+	},
+	"scripts": {
+		"test": "karma start karma.conf.js --single-run && karma start karma-global.conf.js --single-run"
+	},
+	"keywords": [
+		"command",
+		"events"
+	],
+	"main": "./src/UTF8.js",
+	"preferGlobal": "false"
+}
