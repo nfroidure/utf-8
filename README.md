@@ -60,3 +60,10 @@ UTF8.setBytesFromString('1.3$ ~= 1€', 2);
 UTF8.isUTF8(bytes);
 // true | false
 ```
+
+## NodeJS
+
+Also available on NPM :
+```sh
+npm install utf-8
+```
