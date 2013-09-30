@@ -1,4 +1,4 @@
-# UTF8.js
+# UTF8.js [![Build Status](https://travis-ci.org/nfroidure/UTF8.js.png?branch=master)](https://travis-ci.org/nfroidure/UTF8.js)
 
 A simple JavaScript library to encode/decode UTF8 strings.
 
