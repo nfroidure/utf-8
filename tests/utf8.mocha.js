@@ -153,6 +153,13 @@
 	describe('Encoding then decoding strings should work', function(){
 
 		it('for this simple sentence', function() {
+			assert.equal(UTF8.getStringFromBytes([
+				'H'.charCodeAt(0),
+				'e'.charCodeAt(0)
+			]),'He');
+		});
+
+		it('for this simple sentence', function() {
 			assert.equal(UTF8.getStringFromBytes(UTF8.setBytesFromString(
 				'J\'avais gagné 15€ au tiercé !')),'J\'avais gagné 15€ au tiercé !');
 		});

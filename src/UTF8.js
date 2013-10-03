@@ -7,9 +7,9 @@
 
 	var UTF8={
 		// UTF8 encoding detection
-		'isUTF8': function(string) {
+		'isUTF8': function(bytes, byteOffset, byteLength) {
 			try {
-				UTF8.setBytesFromString(string);
+				UTF8.getStringFromBytes(bytes, byteOffset, byteLength, true);
 			} catch(e) {
 				return false;
 			}
