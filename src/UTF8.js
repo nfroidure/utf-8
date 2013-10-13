@@ -116,7 +116,7 @@
 			}
 			return bytes;
 		},
-		'setBytesFromString': function(string, bytes, byteOffset, byteLength) {
+		'setBytesFromString': function(string, bytes, byteOffset, byteLength, strict) {
 			string=string||'';
 			bytes=bytes||[];
 			byteOffset=byteOffset|0;
@@ -124,8 +124,12 @@
 				bytes.byteLength||Infinity);
 			for(var i=0, j=string.length; i<j; i++) {
 				var neededBytes=UTF8.getBytesForCharCode(string[i].charCodeAt(0));
+				if(strict&&byteOffset+neededBytes>byteLength) {
+					throw new Error('Not enought bytes to encode the char "'+string[i]
+						+'" at the offset "'+byteOffset+'".');
+				}
 				UTF8.setBytesFromCharCode(string[i].charCodeAt(0),
-					bytes, byteOffset, neededBytes);
+					bytes, byteOffset, neededBytes, strict);
 				byteOffset+=neededBytes;
 			}
 			return bytes;

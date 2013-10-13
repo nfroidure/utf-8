@@ -194,6 +194,56 @@
 
 	});
 
+	describe('Encoding strings in a too small ArrayBuffer', function(){
+
+		it('should silently fail', function() {
+			var bytes=new Uint8Array(2);
+			assert.equal(UTF8.getStringFromBytes(UTF8.setBytesFromString(
+				'1.3$ ~= 1€', bytes)),'1.');
+			assert.equal(UTF8.getStringFromBytes(UTF8.setBytesFromString(
+				'€', bytes)),'');
+			assert.equal(UTF8.getStringFromBytes(UTF8.setBytesFromString(
+				'1é', bytes)),'1');
+		});
+
+		it('should fail when using strict mode', function() {
+			try {
+				var bytes=new Uint8Array(2);
+				UTF8.setBytesFromString('1.3$ ~= 1€',bytes,null,null,true);
+				throw 'Encoding a string in a too short ArrayBuffer in strict mode did'
+					+' not fail.';
+			} catch (e) {
+				if('Not enought bytes to encode the char "3" at the offset "2".'
+					!==e.message) {
+					throw e;
+				}
+			}
+			try {
+				var bytes=new Uint8Array(2);
+				UTF8.setBytesFromString('€',bytes,null,null,true);
+				throw 'Encoding a string in a too short ArrayBuffer in strict mode did'
+					+' not fail.';
+			} catch (e) {
+				if('Not enought bytes to encode the char "€" at the offset "0".'
+					!==e.message) {
+					throw e;
+				}
+			}
+			try {
+				var bytes=new Uint8Array(2);
+				UTF8.setBytesFromString('1é',bytes,null,null,true);
+				throw 'Encoding a string in a too short ArrayBuffer in strict mode did'
+					+' not fail.';
+			} catch (e) {
+				if('Not enought bytes to encode the char "é" at the offset "1".'
+					!==e.message) {
+					throw e;
+				}
+			}
+		});
+
+	});
+
 // END: Module logic end
 
 	return {};
