@@ -6,14 +6,14 @@
 // START: Module logic start
 
 	var UTF8={
-		// UTF8 encoding detection
-		'isUTF8': function(bytes, byteOffset, byteLength) {
+		// non UTF8 encoding detection (cf README file for details)
+		'isNotUTF8': function(bytes, byteOffset, byteLength) {
 			try {
 				UTF8.getStringFromBytes(bytes, byteOffset, byteLength, true);
 			} catch(e) {
-				return false;
+				return true;
 			}
-			return true;
+			return false;
 		},
 		// UTF8 decoding functions
 		'getCharLength': function(theByte) {

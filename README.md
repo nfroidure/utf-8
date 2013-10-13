@@ -57,9 +57,12 @@ UTF8.setBytesFromString('1.3$ ~= 1€', 2);
 
 ## UTF8 encoding detection
 ```js
-UTF8.isUTF8(bytes);
+UTF8.isNotUTF8(bytes);
 // true | false
 ```
+This function can prove the text contained by the given bytes is not UTF-8
+ (or badly encoded UTF-8 string). It's not reciprocally true, especially for
+ short strings with wich false positives are frequent.
 
 ## NodeJS
 
