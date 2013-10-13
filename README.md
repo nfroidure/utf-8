@@ -64,6 +64,21 @@ This function can prove the text contained by the given bytes is not UTF-8
  (or badly encoded UTF-8 string). It's not reciprocally true, especially for
  short strings with wich false positives are frequent.
 
+## Strict mode
+If you try to encode an UTF8 string in an ArrayBuffer too short to contain the
+ complete string, it will silently fail. To avoid this behavior, use the strict
+ mode :
+
+```js
+var bytes=new Uint8Array(2);
+
+// First encoding a char
+UTF8.setBytesFromCharCode('é'.charCodeAt(0));
+
+// Then encoding a string
+UTF8.setBytesFromString('1.3$ ~= 1€', 2);
+```
+
 ## NodeJS
 
 Also available on NPM :
