@@ -1,30 +1,42 @@
 {
-	"name": "utf-8",
-	"description": "Encode/decode UTF8.",
-	"version": "0.1.0",
-	"author": "Nicolas Froidure",
-	"repository": {
-	"type": "git",
-	"url": "http://github.com/nfroidure/UTF8.git"
-	},
-	"engines": {
-		"node": "*"
-	},
-	"dependencies": {},
-	"devDependencies": {
-		"karma": "~0.10.1",
-		"karma-mocha": "*",
-		"karma-firefox-launcher": "~0.1",
-		"karma-slimerjs-launcher": "0.1.2",
-		"karma-requirejs": "*"
-	},
-	"scripts": {
-		"test": "karma start karma.conf.js --single-run && karma start karma-global.conf.js --single-run"
-	},
-	"keywords": [
-		"command",
-		"events"
-	],
-	"main": "./src/UTF8.js",
-	"preferGlobal": "false"
+  "name": "utf-8",
+  "description": "Encode/decode UTF8.",
+  "version": "0.1.0",
+  "author": "Nicolas Froidure",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/nfroidure/UTF8.git"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "~1.17.1",
+    "mocha-lcov-reporter": "0.0.1",
+    "coveralls": "~2.7.1",
+    "istanbul": "~0.2.4",
+    "karma": "~0.10.9",
+    "karma-mocha": "~0.1.1",
+    "karma-firefox-launcher": "~0.1.3",
+    "karma-slimerjs-launcher": "~0.1.2",
+    "requirejs": "~2.1.10",
+    "karma-script-launcher": "~0.1.0",
+    "karma-chrome-launcher": "~0.1.2",
+    "karma-html2js-preprocessor": "~0.1.0",
+    "karma-jasmine": "~0.1.5",
+    "karma-coffee-preprocessor": "~0.1.2",
+    "karma-phantomjs-launcher": "~0.1.2"
+  },
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha tests/*.mocha.js",
+    "coveralls": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcovonly -- tests/*.mocha.js -R spec -t 5000 && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "cover": "./node_modules/istanbul/lib/cli.js cover --report html ./node_modules/mocha/bin/_mocha -- tests/*.mocha.js -R spec -t 5000"
+  },
+  "keywords": [
+    "command",
+    "events"
+  ],
+  "main": "./src/UTF8.js",
+  "preferGlobal": "false"
 }

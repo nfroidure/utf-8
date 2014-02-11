@@ -9,14 +9,13 @@ module.exports = function(config) {
 
 
     // frameworks to use
-    frameworks: ['mocha', 'requirejs'],
+    frameworks: ['mocha'],
 
 
     // list of files / patterns to load in the browser
     files: [
-    	'tests/main.karma.js',
-      {pattern: 'src/*.js', included: false},
-      {pattern: 'tests/*.mocha.js', included: false},
+      'src/*.js',
+      'tests/*.mocha.js',
       {pattern: 'tests/files/*.txt', included: false}
     ],
 
