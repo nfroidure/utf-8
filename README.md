@@ -1,6 +1,7 @@
-# UTF8.js [![Build Status](https://travis-ci.org/nfroidure/UTF8.js.png?branch=master)](https://travis-ci.org/nfroidure/UTF8.js)
+# UTF8.js
+> A simple JavaScript library to encode/decode UTF8 strings.
 
-A simple JavaScript library to encode/decode UTF8 strings.
+[![Build Status](https://travis-ci.org/nfroidure/UTF8.js.png?branch=master)](https://travis-ci.org/nfroidure/UTF8.js) [![Build status](https://secure.travis-ci.org/nfroidure/UTF8.js.png)](https://travis-ci.org/nfroidure/UTF8.js) [![Dependency Status](https://david-dm.org/nfroidure/UTF8.js.png)](https://david-dm.org/nfroidure/UTF8.js) [![devDependency Status](https://david-dm.org/nfroidure/UTF8.js/dev-status.png)](https://david-dm.org/nfroidure/UTF8.js#info=devDependencies) [![Coverage Status](https://coveralls.io/repos/nfroidure/UTF8.js/badge.png?branch=master)](https://coveralls.io/r/nfroidure/UTF8.js?branch=master)
 
 ## Encoding
 
