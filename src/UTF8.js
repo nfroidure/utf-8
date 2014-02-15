@@ -130,5 +130,7 @@ var UTF8={
 	}
 };
 
-module.exports = UTF8;
+if(global.module) {
+  module.exports = UTF8;
+}
 
