@@ -130,7 +130,7 @@ var UTF8={
 	}
 };
 
-if(global.module) {
+if('undefined' !== typeof module) {
   module.exports = UTF8;
 }
 
