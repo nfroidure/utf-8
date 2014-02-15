@@ -206,6 +206,65 @@ describe('Encoding then decoding strings should work', function(){
 
 });
 
+describe('Encoding unencodable chars', function(){
+
+
+	it('should raise an exception', function(done) {
+
+	  try {
+      UTF8.getBytesForCharCode(0xFFFFFFFF);
+	  } catch(e) {
+	    done();
+	  }
+
+	});
+
+});
+
+describe('Decoding bad strings should raise an exception', function(){
+
+	it('with a bad first byte', function(done) {
+
+	  try {
+		  UTF8.getCharCode(new Uint8Array([0xF0, 0xFF]), 0, 2);
+	  } catch(e) {
+	    done();
+	  }
+
+	});
+
+	it('with a bad second byte', function(done) {
+
+	  try {
+		  UTF8.getCharCode(new Uint8Array([0xC3, 0xF9]), 0, 2);
+	  } catch(e) {
+	    done();
+	  }
+
+	});
+
+});
+
+describe('Decoding unterminated strings', function(){
+
+
+	it('should silently fail', function() {
+	  assert.equal(
+	    UTF8.getStringFromBytes(new Uint8Array([0xF4, 0x8F])),
+	    '');
+	});
+
+
+	it('should raise an exception in strict mode', function(done) {
+	  try {
+	    UTF8.getStringFromBytes(new Uint8Array([0xF4, 0x8F]), null, null, true);
+	  } catch(e) {
+	    done();
+	  }
+	});
+
+});
+
 describe('Encoding strings in a too small ArrayBuffer', function(){
 
 	it('should silently fail', function() {
@@ -252,6 +311,18 @@ describe('Encoding strings in a too small ArrayBuffer', function(){
 				throw e;
 			}
 		}
+	});
+
+});
+
+describe('Detecting the encoding', function(){
+
+	it('should work with valid utf-8', function() {
+		assert.equal(UTF8.isNotUTF8(UTF8.setBytesFromString('€')), false);
+	});
+
+	it('should fail with non UTF-8', function() {
+		assert.equal(UTF8.isNotUTF8(new Uint8Array([0xC0, 0x90, 0x80, 0x01])), true);
 	});
 
 });

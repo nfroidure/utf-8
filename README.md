@@ -71,13 +71,7 @@ If you try to encode an UTF8 string in an ArrayBuffer too short to contain the
  mode :
 
 ```js
-var bytes=new Uint8Array(2);
-
-// First encoding a char
-UTF8.setBytesFromCharCode('é'.charCodeAt(0));
-
-// Then encoding a string
-UTF8.setBytesFromString('1.3$ ~= 1€', 2);
+UTF8.setBytesFromString('1.3$ ~= 1€', 2, null, true);
 ```
 
 ## NodeJS
