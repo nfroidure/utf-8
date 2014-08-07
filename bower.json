@@ -1,0 +1,21 @@
+{
+  "name": "UTF8.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/nfroidure/UTF8.js",
+  "authors": [
+    "nfroidure"
+  ],
+  "description": "A simple JavaScript library to encode/decode UTF8 strings.",
+  "keywords": [
+    "utf-8",
+    "buffer"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
