@@ -1,4 +1,8 @@
 // UTF8 : Manage UTF-8 strings in ArrayBuffers
+if(module.require) {
+  require('string.fromcodepoint');
+  require('string.prototype.codepointat');
+}
 
 var UTF8={
 	// non UTF8 encoding detection (cf README file for details)
@@ -74,7 +78,7 @@ var UTF8={
 						+' bytes are available.');
 				}
 			} else {
-				chars.push(String.fromCharCode(
+				chars.push(String.fromCodePoint(
 					UTF8.getCharCode(bytes, byteOffset, charLength, strict)
 				));
 			}
@@ -84,11 +88,15 @@ var UTF8={
 	},
 	// UTF8 encoding functions
 	'getBytesForCharCode':function(charCode) {
-		for(var i=0; i<4; i++) {
-			if(charCode<Math.pow(2,7+(i*6))) {
-				return i+1;
-			}
-		}
+	  if(charCode < 128) {
+	    return 1;
+	  } else if(charCode < 2048) {
+	    return 2;
+	  } else if(charCode < 65536) {
+	    return 3;
+	  } else if(charCode < 2097152) {
+	    return 4;
+	  }
 		throw new Error('CharCode '+charCode+' cannot be encoded with UTF8.');
 	},
 	'setBytesFromCharCode':function(charCode, bytes, byteOffset, neededBytes) {
@@ -117,12 +125,12 @@ var UTF8={
 		byteLength=('number' === typeof byteLength?byteLength:
 			bytes.byteLength||Infinity);
 		for(var i=0, j=string.length; i<j; i++) {
-			var neededBytes=UTF8.getBytesForCharCode(string[i].charCodeAt(0));
+			var neededBytes=UTF8.getBytesForCharCode(string[i].codePointAt(0));
 			if(strict&&byteOffset+neededBytes>byteLength) {
 				throw new Error('Not enought bytes to encode the char "'+string[i]
 					+'" at the offset "'+byteOffset+'".');
 			}
-			UTF8.setBytesFromCharCode(string[i].charCodeAt(0),
+			UTF8.setBytesFromCharCode(string[i].codePointAt(0),
 				bytes, byteOffset, neededBytes, strict);
 			byteOffset+=neededBytes;
 		}

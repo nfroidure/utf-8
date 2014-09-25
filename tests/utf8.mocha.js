@@ -110,6 +110,8 @@ describe('Decoding chars should work', function(){
 		assert.equal(UTF8.getCharCode([0xF0, 0x90, 0x80, 0x80]), 65536);
 		// []		U+10FFFF	1114111	(11110100 10001111 10111111 10111111)	(F4 8F BF BF)
 		assert.equal(UTF8.getCharCode([0xF4, 0x8F, 0xBF, 0xBF]), 1114111);
+		// []		U+1D306	119558	(11110000 10011101 10001100 10000110)	(F0 9D 8C 86)
+		assert.equal(UTF8.getCharCode([0xF0, 0x9D, 0x8C, 0x86]), 119558);
 	});
 
 	it('for 4 bytes encoded chars in a TypedArray', function() {
@@ -117,6 +119,61 @@ describe('Decoding chars should work', function(){
 		assert.equal(UTF8.getCharCode(new Uint8Array([0xF0, 0x90, 0x80, 0x80])), 65536);
 		// []		U+10FFFF	1114111	(11110100 10001111 10111111 10111111)	(F4 8F BF BF)
 		assert.equal(UTF8.getCharCode(new Uint8Array([0xF4, 0x8F, 0xBF, 0xBF])), 1114111);
+		// []		U+1D306	119558	(11110000 10011101 10001100 10000110)	(F0 9D 8C 86)
+		assert.equal(UTF8.getCharCode(new Uint8Array([0xF0, 0x9D, 0x8C, 0x86])), 119558);
+	});
+
+});
+
+describe('Computing needed bytes should work', function(){
+
+  function createCodepoint(numBits) {
+    var bits = '';
+    while(numBits) {
+      bits += '1';
+      numBits--;
+    }
+    return parseInt(bits, 2);
+  }
+
+	describe('for 1 byte codepoints', function() {
+	  [1, 2, 3, 4, 5, 6, 7].forEach(function(n) {
+
+	    it('with ' + n + ' bit codepoints', function() {
+		    assert.equal(UTF8.getBytesForCharCode(createCodepoint(n)), 1);
+	    })
+
+	  });
+	});
+
+	describe('for 2 bytes codepoints', function() {
+	  [8, 9, 10, 11].forEach(function(n) {
+
+	    it('with ' + n + ' bit codepoints', function() {
+		    assert.equal(UTF8.getBytesForCharCode(createCodepoint(n)), 2);
+	    })
+
+	  });
+	});
+
+	describe('for 3 bytes codepoints', function() {
+	  [12, 13, 14, 15, 16].forEach(function(n) {
+
+	    it('with ' + n + ' bit codepoints', function() {
+		    assert.equal(UTF8.getBytesForCharCode(createCodepoint(n)), 3);
+	    })
+
+	  });
+	});
+
+	describe('for 4 bytes codepoints', function() {
+	  [17, 18, 19, 20, 21].forEach(function(n) {
+
+	    it('with ' + n + ' bit codepoints', function() {
+		    assert.equal(UTF8.getBytesForCharCode(createCodepoint(n)), 4);
+	    })
+
+	  });
 	});
 
 });
@@ -146,6 +203,15 @@ describe('Encoding chars should work', function(){
 		assert.equal(bytes[0],0xE2);
 		assert.equal(bytes[1],0x82);
 		assert.equal(bytes[2],0xAC);
+	});
+
+	it('for 4 bytes encoded chars', function() {
+		var bytes=UTF8.setBytesFromCharCode(119558);
+		assert.equal(bytes.length,4);
+		assert.equal(bytes[0],0xF0);
+		assert.equal(bytes[1],0x9D);
+		assert.equal(bytes[2],0x8C);
+		assert.equal(bytes[3],0x86);
 	});
 
 });
