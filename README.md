@@ -1,7 +1,7 @@
 # UTF8.js
 > A simple JavaScript library to encode/decode UTF8 strings.
 
-[![Build Status](https://travis-ci.org/nfroidure/UTF8.js.png?branch=master)](https://travis-ci.org/nfroidure/UTF8.js) [![Build status](https://secure.travis-ci.org/nfroidure/UTF8.js.png)](https://travis-ci.org/nfroidure/UTF8.js) [![Dependency Status](https://david-dm.org/nfroidure/UTF8.js.png)](https://david-dm.org/nfroidure/UTF8.js) [![devDependency Status](https://david-dm.org/nfroidure/UTF8.js/dev-status.png)](https://david-dm.org/nfroidure/UTF8.js#info=devDependencies) [![Coverage Status](https://coveralls.io/repos/nfroidure/UTF8.js/badge.png?branch=master)](https://coveralls.io/r/nfroidure/UTF8.js?branch=master)
+[![NPM version](https://badge.fury.io/js/utf-8.svg)](https://npmjs.org/package/utf-8) [![Build status](https://secure.travis-ci.org/nfroidure/UTF8.js.svg)](https://travis-ci.org/nfroidure/UTF8.js) [![Dependency Status](https://david-dm.org/nfroidure/UTF8.js.svg)](https://david-dm.org/nfroidure/UTF8.js) [![devDependency Status](https://david-dm.org/nfroidure/UTF8.js/dev-status.svg)](https://david-dm.org/nfroidure/UTF8.js#info=devDependencies) [![Coverage Status](https://coveralls.io/repos/nfroidure/UTF8.js/badge.png?branch=master)](https://coveralls.io/r/nfroidure/UTF8.js?branch=master)
 
 ## Encoding
 
@@ -63,7 +63,7 @@ UTF8.isNotUTF8(bytes);
 ```
 This function can prove the text contained by the given bytes is not UTF-8
  (or badly encoded UTF-8 string). It's not reciprocally true, especially for
- short strings with wich false positives are frequent.
+ short strings with which false positives are frequent.
 
 ## Strict mode
 If you try to encode an UTF8 string in an ArrayBuffer too short to contain the
