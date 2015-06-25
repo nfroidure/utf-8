@@ -1,14 +1,14 @@
 {
   "name": "utf-8",
   "description": "Encode/decode UTF8.",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "author": "Nicolas Froidure",
   "repository": {
     "type": "git",
     "url": "http://github.com/nfroidure/UTF8.js.git"
   },
   "engines": {
-    "node" : ">=0.10.0"
+    "node": ">=0.10.0"
   },
   "dependencies": {
     "string.fromcodepoint": "^0.2.1",
