@@ -1,10 +1,10 @@
 // UTF8 : Manage UTF-8 strings in ArrayBuffers
-if(module.require) {
+if (typeof module !== 'undefined' && typeof module.require === 'function') {
   require('string.fromcodepoint');
   require('string.prototype.codepointat');
 }
 
-var UTF8={
+var _UTF8 = {
   // non UTF8 encoding detection (cf README file for details)
   'isNotUTF8': function(bytes, byteOffset, byteLength) {
     try {
@@ -143,7 +143,11 @@ var UTF8={
   }
 };
 
-if('undefined' !== typeof module) {
-  module.exports = UTF8;
-}
 
+if(typeof module !== 'undefined' && module.hasOwnProperty('exports')) {
+  var UTF8 = _UTF8;
+  module.exports = UTF8;
+}else{
+  UTF8 = _UTF8;
+}
+_UTF8 = undefined;
