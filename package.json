@@ -3,6 +3,7 @@
   "description": "Encode/decode UTF8.",
   "version": "1.0.0",
   "author": "Nicolas Froidure",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "http://github.com/nfroidure/UTF8.js.git"
