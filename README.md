@@ -1,5 +1,6 @@
 # UTF8.js
-> A simple JavaScript library to encode/decode UTF8 strings.
+> A simple JavaScript library to encode/decode UTF8 strings.  
+> Licensed under the MIT License.
 
 [![NPM version](https://badge.fury.io/js/utf-8.svg)](https://npmjs.org/package/utf-8) [![Build status](https://secure.travis-ci.org/nfroidure/UTF8.js.svg)](https://travis-ci.org/nfroidure/UTF8.js) [![Dependency Status](https://david-dm.org/nfroidure/UTF8.js.svg)](https://david-dm.org/nfroidure/UTF8.js) [![devDependency Status](https://david-dm.org/nfroidure/UTF8.js/dev-status.svg)](https://david-dm.org/nfroidure/UTF8.js#info=devDependencies) [![Coverage Status](https://coveralls.io/repos/nfroidure/UTF8.js/badge.svg?branch=master)](https://coveralls.io/r/nfroidure/UTF8.js?branch=master)
 

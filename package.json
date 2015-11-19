@@ -3,6 +3,7 @@
   "description": "Encode/decode UTF8.",
   "version": "1.0.0",
   "author": "Nicolas Froidure",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "http://github.com/nfroidure/UTF8.js.git"
@@ -15,11 +16,12 @@
     "string.prototype.codepointat": "^0.2.0"
   },
   "devDependencies": {
-    "mocha": "~2.2.5",
-    "mocha-lcov-reporter": "0.0.2",
+    "mocha": "~2.3.4",
+    "mocha-lcov-reporter": "1.0.0",
     "coveralls": "~2.11.2",
-    "istanbul": "~0.3.16",
-    "karma": "~0.12.37",
+    "istanbul": "~0.4.0",
+    "karma": "~0.13.15",
+    "phantomjs": "~1.9.8",
     "karma-mocha": "~0.2.0",
     "karma-firefox-launcher": "~0.1.6",
     "karma-chrome-launcher": "~0.2.0",
