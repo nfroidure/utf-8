@@ -34,6 +34,10 @@ var _UTF8={
   'getCharCode': function(bytes, byteOffset, charLength) {
     var charCode = 0, mask = '';
     byteOffset = byteOffset || 0;
+    // validate that the array has at least one byte in it
+    if (bytes.length - byteOffset <= 0) {
+      throw new Error('No more characters remaining in array.');
+    }
     // Retrieve charLength if not given
     charLength = charLength || UTF8.getCharLength(bytes[byteOffset]);
     if(charLength == 0) {
@@ -43,6 +47,10 @@ var _UTF8={
     // Return byte value if charlength is 1
     if(1 === charLength) {
       return bytes[byteOffset];
+    }
+    // validate that the array has enough bytes to make up this character    
+    if (bytes.length - byteOffset < charLength) {
+      throw new Error('Expected at least ' + charLength + ' bytes remaining in array.');
     }
     // Test UTF8 integrity
     mask = '00000000'.slice(0, charLength) + 1 + '00000000'.slice(charLength + 1);
