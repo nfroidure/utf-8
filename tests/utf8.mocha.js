@@ -1,4 +1,4 @@
-var UTF8 = require('../src/UTF8.js');
+var UTF8 = require('../src');
 var assert = require('assert');
 
 // Tests : http://en.wikipedia.org/wiki/UTF-8

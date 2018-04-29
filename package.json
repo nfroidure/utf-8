@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http://github.com/nfroidure/UTF8.js.git"
+    "url": "http://github.com/nfroidure/utf-8.git"
   },
   "engines": {
     "node": ">=6.9.5"
@@ -70,7 +70,7 @@
     "decoder",
     "strict"
   ],
-  "main": "./src/UTF8.js",
+  "main": "src/index",
   "preferGlobal": "false",
   "config": {
     "commitizen": {
