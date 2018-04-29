@@ -9,28 +9,58 @@
     "url": "http://github.com/nfroidure/UTF8.js.git"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=6.9.5"
   },
-  "dependencies": {
-    "string.fromcodepoint": "^0.2.1",
-    "string.prototype.codepointat": "^0.2.0"
+  "metapak": {
+    "data": {
+      "files": "src/*.js tests/*.mocha.js",
+      "testsFiles": "tests/*.mocha.js"
+    },
+    "configs": [
+      "readme",
+      "mocha",
+      "eslint",
+      "codeclimate",
+      "travis",
+      "karma"
+    ]
   },
   "devDependencies": {
-    "mocha": "~2.3.4",
-    "mocha-lcov-reporter": "1.0.0",
-    "coveralls": "~2.11.2",
-    "istanbul": "~0.4.0",
-    "karma": "~0.13.15",
-    "phantomjs": "~1.9.8",
-    "karma-mocha": "~0.2.0",
-    "karma-firefox-launcher": "~0.1.6",
-    "karma-chrome-launcher": "~0.2.0",
-    "karma-phantomjs-launcher": "~0.2.0"
+    "browserify": "^14.4.0",
+    "commitizen": "^2.9.6",
+    "conventional-changelog-cli": "^1.3.8",
+    "coveralls": "^3.0.0",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^4.19.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "istanbul": "^0.4.5",
+    "jasmine-core": "^2.7.0",
+    "karma": "^2.0.0",
+    "karma-browserify": "^5.1.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-firefox-launcher": "^1.1.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-mocha": "^1.3.0",
+    "metapak": "1.0.3",
+    "metapak-nfroidure": "6.0.0",
+    "mocha": "^5.0.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "prettier": "^1.11.1"
   },
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha tests/*.mocha.js",
-    "coveralls": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcovonly -- tests/*.mocha.js -R spec -t 5000 && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "cover": "./node_modules/istanbul/lib/cli.js cover --report html ./node_modules/mocha/bin/_mocha -- tests/*.mocha.js -R spec -t 5000"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "cli": "env NODE_ENV=${NODE_ENV:-cli}",
+    "cover": "istanbul cover _mocha --report html -- tests/*.mocha.js -R spec -t 5000",
+    "coveralls": "istanbul cover _mocha --report lcovonly -- tests/*.mocha.js -R spec -t 5000 && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
+    "cz": "env NODE_ENV=${NODE_ENV:-cli} git cz",
+    "karma": "karma start karma.conf.js",
+    "lint": "eslint src/*.js tests/*.mocha.js",
+    "metapak": "metapak",
+    "mocha": "mocha tests/*.mocha.js",
+    "prettier": "prettier --write src/*.js tests/*.mocha.js",
+    "preversion": "npm t && npm run lint && npm run metapak -s",
+    "test": "npm run mocha && npm run karma",
+    "version": "npm run changelog && git add CHANGELOG.md"
   },
   "keywords": [
     "utf-8",
@@ -41,5 +71,24 @@
     "strict"
   ],
   "main": "./src/UTF8.js",
-  "preferGlobal": "false"
+  "preferGlobal": "false",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "greenkeeper": {
+    "ignore": [
+      "commitizen",
+      "cz-conventional-changelog",
+      "conventional-changelog-cli",
+      "mocha",
+      "mocha-lcov-reporter",
+      "coveralls",
+      "istanbul",
+      "eslint",
+      "eslint-config-prettier",
+      "prettier"
+    ]
+  }
 }
