@@ -1,7 +1,7 @@
 {
   "name": "utf-8",
   "description": "Encode/decode UTF8.",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Nicolas Froidure",
   "license": "MIT",
   "repository": {
