@@ -76,7 +76,7 @@ var bytes=new Uint8Array(14);
 UTF8.setBytesFromCharCode('é'.charCodeAt(0));
 
 // Then encoding a string
-UTF8.setBytesFromString('1.3$ ~= 1€', 2);
+UTF8.setBytesFromString('1.3$ ~= 1€', bytes, 2);
 ```
 
 ## UTF8 encoding detection
