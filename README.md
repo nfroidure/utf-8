@@ -76,7 +76,7 @@ var bytes=new Uint8Array(14);
 UTF8.setBytesFromCharCode('é'.charCodeAt(0));
 
 // Then encoding a string
-UTF8.setBytesFromString('1.3$ ~= 1€', bytes, 2);
+UTF8.setBytesFromString('1.3$ ~= 1€', bytes);
 ```
 
 ## UTF8 encoding detection
@@ -94,7 +94,7 @@ If you try to encode an UTF8 string in an ArrayBuffer too short to contain the
  mode :
 
 ```js
-UTF8.setBytesFromString('1.3$ ~= 1€', [], 2, null, true);
+UTF8.setBytesFromString('1.3$ ~= 1€', [], 0, null, true);
 ```
 
 # Thanks
