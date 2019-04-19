@@ -94,7 +94,7 @@ If you try to encode an UTF8 string in an ArrayBuffer too short to contain the
  mode :
 
 ```js
-UTF8.setBytesFromString('1.3$ ~= 1€', 2, null, true);
+UTF8.setBytesFromString('1.3$ ~= 1€', [], 2, null, true);
 ```
 
 # Thanks
