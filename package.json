@@ -23,7 +23,7 @@
   },
   "name": "utf-8",
   "description": "Encode/decode UTF8.",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "author": {
     "name": "Nicolas Froidure",
     "email": "nicolas.froidure@insertafter.com",
