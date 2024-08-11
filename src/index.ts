@@ -1,24 +1,20 @@
-module.exports = {
-  isNotUTF8: isNotUTF8,
-  getCharLength: getCharLength,
-  getCharCode: getCharCode,
-  getStringFromBytes: getStringFromBytes,
-  getBytesForCharCode: getBytesForCharCode,
-  setBytesFromCharCode: setBytesFromCharCode,
-  setBytesFromString: setBytesFromString,
-};
+import { YError } from 'yerror';
 
 // non UTF8 encoding detection (cf README file for details)
-function isNotUTF8(bytes, byteOffset, byteLength) {
+export function isNotUTF8(
+  bytes: number[] | Uint8Array = [],
+  byteOffset?: number,
+  byteLength?: number,
+) {
   try {
     getStringFromBytes(bytes, byteOffset, byteLength, true);
-  } catch (e) {
+  } catch (_) {
     return true;
   }
   return false;
 }
 
-function getCharLength(theByte) {
+export function getCharLength(theByte: number) {
   // 4 bytes encoded char (mask 11110000)
   if (0xf0 == (theByte & 0xf0)) {
     return 4;
@@ -36,10 +32,14 @@ function getCharLength(theByte) {
 }
 
 // UTF8 decoding functions
-function getCharCode(bytes, byteOffset, charLength) {
-  var charCode = 0,
+export function getCharCode(
+  bytes: number[] | Uint8Array = [],
+  byteOffset: number = 0,
+  charLength?: number,
+) {
+  let charCode = 0,
     mask = '';
-  byteOffset = byteOffset || 0;
+
   // validate that the array has at least one byte in it
   if (bytes.length - byteOffset <= 0) {
     throw new Error('No more characters remaining in array.');
@@ -52,7 +52,7 @@ function getCharCode(bytes, byteOffset, charLength) {
         ' is not a significative' +
         ' byte (offset:' +
         byteOffset +
-        ').'
+        ').',
     );
   }
   // Return byte value if charlength is 1
@@ -62,7 +62,7 @@ function getCharCode(bytes, byteOffset, charLength) {
   // validate that the array has enough bytes to make up this character
   if (bytes.length - byteOffset < charLength) {
     throw new Error(
-      'Expected at least ' + charLength + ' bytes remaining in array.'
+      'Expected at least ' + charLength + ' bytes remaining in array.',
     );
   }
   // Test UTF8 integrity
@@ -77,7 +77,7 @@ function getCharCode(bytes, byteOffset, charLength) {
         ' encoded char' +
         ' cannot encode the ' +
         (charLength + 1) +
-        'th rank bit to 1.'
+        'th rank bit to 1.',
     );
   }
   // Reading the first byte
@@ -93,7 +93,7 @@ function getCharCode(bytes, byteOffset, charLength) {
         'Index ' +
           (byteOffset + 1) +
           ': Next bytes of encoded char' +
-          ' must begin with a "10" bit sequence.'
+          ' must begin with a "10" bit sequence.',
       );
     }
     charCode += (bytes[++byteOffset] & 0x3f) << (--charLength * 6);
@@ -101,14 +101,19 @@ function getCharCode(bytes, byteOffset, charLength) {
   return charCode;
 }
 
-function getStringFromBytes(bytes, byteOffset, byteLength, strict) {
-  var charLength,
-    chars = [];
-  byteOffset = byteOffset | 0;
-  byteLength =
-    'number' === typeof byteLength
-      ? byteLength
-      : bytes.byteLength || bytes.length;
+export function getStringFromBytes(
+  bytes: number[] | Uint8Array = [],
+  byteOffset: number = 0,
+  byteLength?: number,
+  strict: boolean = false,
+) {
+  let charLength: number;
+  const chars: string[] = [];
+
+  if ('number' !== typeof byteLength) {
+    byteLength = 'byteLength' in bytes ? bytes.byteLength : bytes.length;
+  }
+
   for (; byteOffset < byteLength; byteOffset++) {
     charLength = getCharLength(bytes[byteOffset]);
     if (byteOffset + charLength > byteLength) {
@@ -120,12 +125,12 @@ function getStringFromBytes(bytes, byteOffset, byteLength, strict) {
             charLength +
             ' bytes encoded char declaration but only ' +
             (byteLength - byteOffset) +
-            ' bytes are available.'
+            ' bytes are available.',
         );
       }
     } else {
       chars.push(
-        String.fromCodePoint(getCharCode(bytes, byteOffset, charLength, strict))
+        String.fromCodePoint(getCharCode(bytes, byteOffset, charLength)),
       );
     }
     byteOffset += charLength - 1;
@@ -134,7 +139,7 @@ function getStringFromBytes(bytes, byteOffset, byteLength, strict) {
 }
 
 // UTF8 encoding functions
-function getBytesForCharCode(charCode) {
+export function getBytesForCharCode(charCode: number): number {
   if (charCode < 128) {
     return 1;
   } else if (charCode < 2048) {
@@ -147,7 +152,12 @@ function getBytesForCharCode(charCode) {
   throw new Error('CharCode ' + charCode + ' cannot be encoded with UTF8.');
 }
 
-function setBytesFromCharCode(charCode, bytes, byteOffset, neededBytes) {
+export function setBytesFromCharCode(
+  charCode: number,
+  bytes: number[] | Uint8Array = [],
+  byteOffset: number = 0,
+  neededBytes?: number,
+) {
   charCode = charCode | 0;
   bytes = bytes || [];
   byteOffset = byteOffset | 0;
@@ -168,29 +178,36 @@ function setBytesFromCharCode(charCode, bytes, byteOffset, neededBytes) {
   return bytes;
 }
 
-function setBytesFromString(string, bytes, byteOffset, byteLength, strict) {
+export function setBytesFromString(
+  string: string = '',
+  bytes: number[] | Uint8Array = [],
+  byteOffset: number = 0,
+  byteLength?: number,
+  strict: boolean = false,
+) {
   string = string || '';
   bytes = bytes || [];
   byteOffset = byteOffset | 0;
-  byteLength =
-    'number' === typeof byteLength ? byteLength : bytes.byteLength || Infinity;
-  for (var i = 0, j = string.length; i < j; i++) {
-    var neededBytes = getBytesForCharCode(string[i].codePointAt(0));
+
+  if ('number' !== typeof byteLength) {
+    byteLength = 'byteLength' in bytes ? bytes.byteLength : bytes.length;
+  }
+
+  for (let i = 0, j = string.length; i < j; i++) {
+    const neededBytes = getBytesForCharCode(string[i].codePointAt(0) as number);
+
     if (strict && byteOffset + neededBytes > byteLength) {
-      throw new Error(
-        'Not enought bytes to encode the char "' +
-          string[i] +
-          '" at the offset "' +
-          byteOffset +
-          '".'
+      throw new YError(
+        'E_BUFFER_OVERFLOW',
+        string[i],
+        byteOffset,
       );
     }
     setBytesFromCharCode(
-      string[i].codePointAt(0),
+      string[i].codePointAt(0) as number,
       bytes,
       byteOffset,
       neededBytes,
-      strict
     );
     byteOffset += neededBytes;
   }
